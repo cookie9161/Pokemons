@@ -6,6 +6,7 @@ public enum ElementsType {
     WATER,
     ROCK;
 
+    //TODO create a method isSuperStrongAgainst and implement it to atack method in Pokemon class
     public boolean isStrongAgainst(ElementsType enemyPokemonType){
         return switch (this) {
             case FIRE -> enemyPokemonType.equals(ROCK);
