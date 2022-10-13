@@ -1,8 +1,8 @@
 
-import gameConsole.WelcomeScreen;
+import gameConsole.MainScreen;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(WelcomeScreen.welcomePlayer());
+        System.out.println(MainScreen.welcomePlayer());
     }
 }
