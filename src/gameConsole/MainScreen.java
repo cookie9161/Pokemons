@@ -4,6 +4,4 @@ public class MainScreen {
     public MainScreen() {
 
     }
-
-
 }
