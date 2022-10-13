@@ -1,8 +1,8 @@
-package java.pokemons;
+package pokemons;
 
 public class Attack {
     String name;
-    Type type;
+    ElementsType type;
     int baseAttackPower;
     
 }

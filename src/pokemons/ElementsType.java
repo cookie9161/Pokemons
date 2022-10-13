@@ -1,12 +1,12 @@
-package java.pokemons;
+package pokemons;
 
-public enum Type {
+public enum ElementsType {
     ELECTRIC,
     FIRE,
     WATER,
     ROCK;
 
-    public boolean isStrongAgainst(Type enemyPokemonType){
+    public boolean isStrongAgainst(ElementsType enemyPokemonType){
         return switch (this) {
             case FIRE -> enemyPokemonType.equals(ROCK);
             case WATER -> enemyPokemonType.equals(FIRE);
@@ -15,7 +15,7 @@ public enum Type {
         };
     }
 
-    public boolean isWeakAgainst(Type enemyPokemonType){
+    public boolean isWeakAgainst(ElementsType enemyPokemonType){
         return switch (this) {
             case FIRE -> enemyPokemonType.equals(WATER);
             case WATER -> enemyPokemonType.equals(ELECTRIC);
