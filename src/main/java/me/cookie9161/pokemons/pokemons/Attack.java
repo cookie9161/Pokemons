@@ -1,13 +1,13 @@
-package pokemons;
+package me.cookie9161.pokemons.pokemons;
 
 public class Attack{
     private final String name;
     private final ElementsType type;
     private final int baseDamage;
 
-    public Attack(String name, ElementsType type, int baseDamage) {
+    public Attack(String name, ElementsType elementsType, int baseDamage) {
         this.name = name;
-        this.type = type;
+        this.type = elementsType;
         this.baseDamage = baseDamage;
     }
 

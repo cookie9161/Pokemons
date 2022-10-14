@@ -1,4 +1,4 @@
-package pokemons;
+package me.cookie9161.pokemons.pokemons;
 
 public enum ElementsType {
     ELECTRIC,
@@ -6,7 +6,7 @@ public enum ElementsType {
     WATER,
     ROCK;
 
-    //TODO create a method isSuperStrongAgainst and implement it to atack method in Pokemon class
+    //TODO create a method isSuperStrongAgainst and implement it to attack method in Pokemon class
     public boolean isStrongAgainst(ElementsType enemyPokemonType){
         return switch (this) {
             case FIRE -> enemyPokemonType.equals(ROCK);
