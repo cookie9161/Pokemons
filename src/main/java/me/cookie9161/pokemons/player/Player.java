@@ -3,38 +3,29 @@ package me.cookie9161.pokemons.player;
 import lombok.Getter;
 import lombok.Setter;
 import me.cookie9161.pokemons.pokemons.Pokemon;
+import me.cookie9161.pokemons.pokemons.PokemonRegistry;
 
 import java.util.List;
 
 @Setter
 @Getter
 public class Player {
+    private static final PlayerRegistry playerRegistry = new PlayerRegistry();
+
     private final String name;
     private List<Pokemon> pokemons;
 
-    public Player(String name){
+
+    private Player(String name) {
         this.name = name;
     }
 
-    public void addPokemon(Pokemon pokemon){
-        pokemons.add(pokemon);
+    public static Player getOrCreatePlayer(String name) {
+        return playerRegistry.getPlayer(name)
+                .orElseGet(() -> {
+                    Player player = new Player(name);
+                    playerRegistry.addPlayer(player);
+                    return player;
+                });
     }
-
-    public void removePokemon(Pokemon pokemon){
-        pokemons.remove(pokemon);
-    }
-
-    public Pokemon getPokemon(int index){
-        return pokemons.get(index);
-    }
-
-    public Pokemon getPokemon(String name){
-        for (Pokemon pokemon : pokemons) {
-            if (pokemon.getName().equals(name)) {
-                return pokemon;
-            }
-        }
-        return null;
-    }
-
 }

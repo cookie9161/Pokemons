@@ -9,7 +9,5 @@ public class CommandLineRunner {
         MainScreen mainScreen = new MainScreen();
         mainScreen.welcomePlayerPack();
 
-        Player player = mainScreen.getPlayer();
-        System.out.println(player.getName());
     }
 }

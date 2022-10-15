@@ -14,6 +14,8 @@ public class Pokemon {
     private static final double WEAK_ATTACK_MULTIPLIER = 0.5;
     private static final double STRONG_ATTACK_MULTIPLIER = 1.25;
 
+    //private static final PokemonRegistry pokemonRegistry = new PokemonRegistry();
+
     private final String name;
     private final ElementsType type;
 
@@ -37,7 +39,18 @@ public class Pokemon {
         this.level = Level.getLevel(experience);
     }
 
-    //TODO add attack accuracy to the method and implement attackPower to calculate damage (divide by 10 and multiply by PokemonPower)
+
+//    TODO improve this method! Creates a new Pokemon which hardcoded variables.
+//    public static Pokemon getOrCreatePokemon(String name) {
+//        return pokemonRegistry.getPokemon(name)
+//                .orElseGet(() -> {
+//                    Pokemon pokemon = new Pokemon(name, ElementsType.NORMAL, 100, 10, null);
+//                    pokemonRegistry.addPokemon(pokemon);
+//                    return pokemon;
+//                });
+//    }
+
+//TODO add attack accuracy to the method and implement attackPower to calculate damage (divide by 10 and multiply by PokemonPower)
     private void attack(Attack chosenAttack, Pokemon target, int pokemonPower) {
         int damage = getAttackMultiplier(chosenAttack.getType(), target.getType(), pokemonPower);
 
@@ -77,4 +90,5 @@ public class Pokemon {
             this.setBasePokemonPower(this.getBasePokemonPower() + 5);
         }
     }
+
 }
