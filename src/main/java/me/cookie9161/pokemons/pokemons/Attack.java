@@ -5,6 +5,7 @@ public class Attack{
     private final ElementsType type;
     private final int baseDamage;
 
+    //TODO add accuracy to constructor
     public Attack(String name, ElementsType elementsType, int baseDamage) {
         this.name = name;
         this.type = elementsType;
