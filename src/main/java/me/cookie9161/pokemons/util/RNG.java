@@ -10,4 +10,8 @@ public class RNG {
     public static int getRandomNumberWithinRange(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max);
     }
+
+    public static boolean isHit(int accuracy) {
+        return getRandomNumberWithinRange(0, 100) <= accuracy;
+    }
 }

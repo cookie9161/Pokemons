@@ -1,7 +1,8 @@
-package me.cookie9161.pokemons.pokemons;
+package me.cookie9161.pokemons.registry;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import me.cookie9161.pokemons.model.pokemons.Pokemon;
 
 import java.util.Optional;
 import java.util.Set;

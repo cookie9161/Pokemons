@@ -1,7 +1,6 @@
 package me.cookie9161.pokemons;
 
-import me.cookie9161.pokemons.player.Player;
-import me.cookie9161.pokemons.screen.MainScreen;
+import me.cookie9161.pokemons.model.screen.MainScreen;
 
 public class CommandLineRunner {
 

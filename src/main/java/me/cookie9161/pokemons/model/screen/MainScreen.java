@@ -1,6 +1,6 @@
-package me.cookie9161.pokemons.screen;
+package me.cookie9161.pokemons.model.screen;
 
-import me.cookie9161.pokemons.player.PlayerInput;
+import me.cookie9161.pokemons.model.player.PlayerInput;
 import me.cookie9161.pokemons.util.Messages;
 
 

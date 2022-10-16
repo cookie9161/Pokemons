@@ -1,4 +1,4 @@
-package me.cookie9161.pokemons.player;
+package me.cookie9161.pokemons.model.player;
 
 import lombok.Getter;
 

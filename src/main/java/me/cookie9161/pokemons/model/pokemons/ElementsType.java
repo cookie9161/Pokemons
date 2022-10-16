@@ -1,4 +1,4 @@
-package me.cookie9161.pokemons.pokemons;
+package me.cookie9161.pokemons.model.pokemons;
 
 public enum ElementsType {
     ELECTRIC,

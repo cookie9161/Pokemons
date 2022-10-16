@@ -18,6 +18,21 @@ public class Messages {
             
             Here are some Pokemon you can choose from:""";
 
+    public static final String POKEMON_USE_ATTACK =
+            """
+            %s used %s!
+            """;
+
+    public static final String ATTACK_HIT =
+            """
+            It's super effective!
+            """;
+
+    public static final String ATTACK_MISS =
+            """
+            It missed!
+            """;
+
     private Messages() {
     }
 

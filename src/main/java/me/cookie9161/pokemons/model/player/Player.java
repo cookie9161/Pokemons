@@ -1,9 +1,9 @@
-package me.cookie9161.pokemons.player;
+package me.cookie9161.pokemons.model.player;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.cookie9161.pokemons.pokemons.Pokemon;
-import me.cookie9161.pokemons.pokemons.PokemonRegistry;
+import me.cookie9161.pokemons.model.pokemons.Pokemon;
+import me.cookie9161.pokemons.registry.PlayerRegistry;
 
 import java.util.List;
 

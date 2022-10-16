@@ -1,6 +1,8 @@
-package me.cookie9161.pokemons.pokemons;
+package me.cookie9161.pokemons.model.pokemons;
 
 
+import me.cookie9161.pokemons.registry.PokemonRegistry;
+import me.cookie9161.pokemons.util.Messages;
 import me.cookie9161.pokemons.util.RNG;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,7 @@ public class Pokemon {
     private static final double WEAK_ATTACK_MULTIPLIER = 0.5;
     private static final double STRONG_ATTACK_MULTIPLIER = 1.25;
 
-    //private static final PokemonRegistry pokemonRegistry = new PokemonRegistry();
+    private static final PokemonRegistry pokemonRegistry = new PokemonRegistry();
 
     private final String name;
     private final ElementsType type;
@@ -40,25 +42,27 @@ public class Pokemon {
     }
 
 
-//    TODO improve this method! Creates a new Pokemon which hardcoded variables.
-//    public static Pokemon getOrCreatePokemon(String name) {
-//        return pokemonRegistry.getPokemon(name)
-//                .orElseGet(() -> {
-//                    Pokemon pokemon = new Pokemon(name, ElementsType.NORMAL, 100, 10, null);
-//                    pokemonRegistry.addPokemon(pokemon);
-//                    return pokemon;
-//                });
-//    }
+    public static Pokemon getPokemon(String name) {
+        return pokemonRegistry.getPokemon(name)
+                .orElseThrow(() -> new IllegalArgumentException("Pokemon " + name + " does not exist!"));
+    }
 
 //TODO add attack accuracy to the method and implement attackPower to calculate damage (divide by 10 and multiply by PokemonPower)
     private void attack(Attack chosenAttack, Pokemon target, int pokemonPower) {
+        Messages.sendMessage(Messages.POKEMON_USE_ATTACK, this.name, chosenAttack.getName());
+
         int damage = getAttackMultiplier(chosenAttack.getType(), target.getType(), pokemonPower);
 
         int interval = (int) (damage * RNG_DEVIATION);
 
         damage = RNG.getRandomNumberWithinRange(damage - interval, damage + interval);
 
-        target.setHp(Math.max(target.getHp() - damage, 0));
+        if (RNG.isHit(chosenAttack.getAccuracy())) {
+            target.setHp(Math.max(target.getHp() - damage, 0));
+            Messages.sendMessage(Messages.ATTACK_HIT);
+        } else {
+            Messages.sendMessage(Messages.ATTACK_MISS);
+        }
     }
 
     private int getAttackMultiplier(ElementsType attackElementsType, ElementsType targetPokemonElementsType, int pokemonPower) {
