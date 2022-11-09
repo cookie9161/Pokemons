@@ -33,6 +33,16 @@ public class Messages {
             It missed!
             """;
 
+    public static final String POKEMON_NOT_FOUND =
+            """
+            Pokemon {} not found!
+            """;
+
+    public static final String SQL_QUERY_FAIL =
+            """
+            Failed to execute query: %s
+            """;
+
     private Messages() {
     }
 

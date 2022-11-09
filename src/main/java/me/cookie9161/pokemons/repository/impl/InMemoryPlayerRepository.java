@@ -1,16 +1,17 @@
-package me.cookie9161.pokemons.registry;
+package me.cookie9161.pokemons.repository.impl;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import me.cookie9161.pokemons.model.player.Player;
+import me.cookie9161.pokemons.repository.PlayerRepository;
 
 import java.util.Optional;
 import java.util.Set;
 
-public class PlayerRegistry {
+public class InMemoryPlayerRepository implements PlayerRepository {
     private final Set<Player> players;
 
-    public PlayerRegistry() {
+    public InMemoryPlayerRepository() {
         this.players = Sets.newHashSet();
     }
 

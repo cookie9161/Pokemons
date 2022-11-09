@@ -1,22 +1,27 @@
 package me.cookie9161.pokemons.model.pokemons;
 
 
-import me.cookie9161.pokemons.registry.PokemonRegistry;
+import me.cookie9161.pokemons.repository.impl.InMemoryPokemonRepository;
 import me.cookie9161.pokemons.util.Messages;
 import me.cookie9161.pokemons.util.RNG;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
 public class Pokemon {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Pokemon.class);
+
     private static final double RNG_DEVIATION = 0.15;
     private static final double WEAK_ATTACK_MULTIPLIER = 0.5;
     private static final double STRONG_ATTACK_MULTIPLIER = 1.25;
 
-    private static final PokemonRegistry pokemonRegistry = new PokemonRegistry();
+    private static final InMemoryPokemonRepository IN_MEMORY_POKEMON_REPOSITORY = new InMemoryPokemonRepository();
 
     private final String name;
     private final ElementsType type;
@@ -42,9 +47,12 @@ public class Pokemon {
     }
 
 
-    public static Pokemon getPokemon(String name) {
-        return pokemonRegistry.getPokemon(name)
-                .orElseThrow(() -> new IllegalArgumentException("Pokemon " + name + " does not exist!"));
+    public static Optional<Pokemon> getPokemon(String name) {
+        Optional<Pokemon> optionalPokemon = IN_MEMORY_POKEMON_REPOSITORY.getPokemon(name);
+        if (optionalPokemon.isEmpty()) {
+            LOGGER.warn(Messages.POKEMON_NOT_FOUND, name);
+        }
+        return optionalPokemon;
     }
 
 //TODO add attack accuracy to the method and implement attackPower to calculate damage (divide by 10 and multiply by PokemonPower)
