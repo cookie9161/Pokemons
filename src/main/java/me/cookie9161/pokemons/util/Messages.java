@@ -35,7 +35,7 @@ public class Messages {
 
     public static final String POKEMON_NOT_FOUND =
             """
-            Pokemon {} not found!
+            Pokemon %s not found!
             """;
 
     public static final String SQL_QUERY_FAIL =

@@ -1,9 +1,8 @@
 package me.cookie9161.pokemons.db;
 
+import lombok.extern.slf4j.Slf4j;
 import me.cookie9161.pokemons.util.Messages;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +13,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Slf4j
 public abstract class SQLDatabaseConnection {
-    protected static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
-    protected static final Logger LOGGER = LogManager.getLogger(SQLDatabaseConnection.class);
 
     public abstract void connect();
     public abstract void disconnect();
@@ -32,12 +30,12 @@ public abstract class SQLDatabaseConnection {
             try (Connection connection = getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.executeUpdate();
-                System.out.println("Executed query: " + query);
+                log.info("Executed query: " + query);
+                executorService.shutdown();
             } catch (SQLException exception) {
-                LOGGER.error(Messages.SQL_QUERY_FAIL.formatted(query), exception);
+                log.error(Messages.SQL_QUERY_FAIL.formatted(query), exception);
             }
         });
-
     }
 
     public final Optional<CompletableFuture<ResultSet>> executeQuery(String query) {
@@ -52,7 +50,7 @@ public abstract class SQLDatabaseConnection {
                 preparedStatement.close();
                 return resultSet;
             } catch (SQLException exception){
-                LOGGER.error(Messages.SQL_QUERY_FAIL.formatted(query), exception);
+                log.error(Messages.SQL_QUERY_FAIL.formatted(query), exception);
                 return null;
             }
         }, EXECUTOR_SERVICE));

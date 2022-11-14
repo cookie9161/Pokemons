@@ -2,11 +2,13 @@ package me.cookie9161.pokemons.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import me.cookie9161.pokemons.util.Messages;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Slf4j
 public class PostgresDatabaseConnection extends SQLDatabaseConnection {
     private static final String POOL_NAME = "pokemon-pool";
 
@@ -31,14 +33,8 @@ public class PostgresDatabaseConnection extends SQLDatabaseConnection {
 
             hikariDataSource = new HikariDataSource(hikariConfig);
         } catch (Exception exception) {
-            LOGGER.error(Messages.FAILED_TO_CONNECT, exception);
-        }
-    }
+            log.error(Messages.FAILED_TO_CONNECT, exception);
 
-    @Override
-    public void disconnect() {
-        if (hikariDataSource != null && !hikariDataSource.isClosed()) {
-            hikariDataSource.close();
         }
     }
 
@@ -47,8 +43,15 @@ public class PostgresDatabaseConnection extends SQLDatabaseConnection {
         try {
             return hikariDataSource.getConnection();
         } catch (SQLException exception) {
-            LOGGER.error(Messages.FAILED_TO_CREATE_POOL, exception);
+            log.error(Messages.FAILED_TO_CREATE_POOL, exception);
             throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public void disconnect() {
+        if (hikariDataSource != null && !hikariDataSource.isClosed()) {
+            hikariDataSource.close();
         }
     }
 

@@ -1,21 +1,20 @@
 package me.cookie9161.pokemons.model.pokemons;
 
 
+import lombok.extern.slf4j.Slf4j;
 import me.cookie9161.pokemons.repository.impl.InMemoryPokemonRepository;
 import me.cookie9161.pokemons.util.Messages;
 import me.cookie9161.pokemons.util.RNG;
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Getter
 @Setter
 public class Pokemon {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Pokemon.class);
 
     private static final double RNG_DEVIATION = 0.15;
     private static final double WEAK_ATTACK_MULTIPLIER = 0.5;
@@ -47,10 +46,10 @@ public class Pokemon {
     }
 
 
-    public static Optional<Pokemon> getPokemon(String name) {
+    public Optional<Pokemon> getPokemon(String name) {
         Optional<Pokemon> optionalPokemon = IN_MEMORY_POKEMON_REPOSITORY.getPokemon(name);
         if (optionalPokemon.isEmpty()) {
-            LOGGER.warn(Messages.POKEMON_NOT_FOUND, name);
+            log.error(Messages.POKEMON_NOT_FOUND.formatted(name));
         }
         return optionalPokemon;
     }
