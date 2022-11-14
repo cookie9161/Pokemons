@@ -26,7 +26,8 @@ public abstract class SQLDatabaseConnection {
             return;
         }
 
-        EXECUTOR_SERVICE.submit(() -> {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.submit(() -> {
             try (Connection connection = getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.executeUpdate();
@@ -53,6 +54,6 @@ public abstract class SQLDatabaseConnection {
                 log.error(Messages.SQL_QUERY_FAIL.formatted(query), exception);
                 return null;
             }
-        }, EXECUTOR_SERVICE));
+        }, Executors.newCachedThreadPool()));
     }
 }

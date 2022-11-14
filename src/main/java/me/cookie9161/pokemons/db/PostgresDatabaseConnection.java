@@ -18,7 +18,6 @@ public class PostgresDatabaseConnection extends SQLDatabaseConnection {
     public void connect() {
         try {
             HikariConfig hikariConfig = new HikariConfig();
-            hikariConfig.setDriverClassName("org.postgresql.ds.PGSimpleDataSource");
             hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5432/Pokemons");
             hikariConfig.setUsername("postgres");
             hikariConfig.setPassword("postgres");
