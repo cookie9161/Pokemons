@@ -43,6 +43,16 @@ public class Messages {
             Failed to execute query: %s
             """;
 
+    public static final String FAILED_TO_CONNECT =
+            """
+            Failed to connect to database!
+            """;
+
+    public static final String FAILED_TO_CREATE_POOL =
+            """
+            Failed to create a pool!
+            """;
+
     private Messages() {
     }
 

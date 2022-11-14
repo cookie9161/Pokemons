@@ -23,78 +23,55 @@ public enum ElementsType {
     //TODO create a method isSuperStrongAgainst and implement it to attack method in Pokemon class
     public boolean isStrongAgainst(ElementsType enemyPokemonType){
         return switch (this) {
-            case NORMAL -> enemyPokemonType.equals(NORMAL);
-            case FIGHTING -> enemyPokemonType.equals(NORMAL) || enemyPokemonType.equals(ROCK)
-                    || enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(ICE) || enemyPokemonType.equals(DARK);
-            case FLYING -> enemyPokemonType.equals(FIGHTING) || enemyPokemonType.equals(BUG)
-                    || enemyPokemonType.equals(GRASS);
-            case POISON -> enemyPokemonType.equals(GRASS) || enemyPokemonType.equals(FAIRY);
-            case GROUND -> enemyPokemonType.equals(POISON) || enemyPokemonType.equals(ROCK)
-                    || enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(FIRE)
-                    || enemyPokemonType.equals(ELECTRIC);
-            case ROCK -> enemyPokemonType.equals(FLYING) || enemyPokemonType.equals(BUG)
-                    || enemyPokemonType.equals(FIRE) || enemyPokemonType.equals(ICE);
-            case BUG -> enemyPokemonType.equals(GRASS) || enemyPokemonType.equals(PSYCHIC)
-                    || enemyPokemonType.equals(DARK);
-            case GHOST, DARK -> enemyPokemonType.equals(GHOST) || enemyPokemonType.equals(PSYCHIC);
-            case STEEL -> enemyPokemonType.equals(ROCK) || enemyPokemonType.equals(ICE)
-                    || enemyPokemonType.equals(FAIRY);
-            case FIRE -> enemyPokemonType.equals(BUG) || enemyPokemonType.equals(STEEL)
-                    || enemyPokemonType.equals(ICE) || enemyPokemonType.equals(GRASS);
-            case WATER -> enemyPokemonType.equals(GROUND) || enemyPokemonType.equals(ROCK)
-                    || enemyPokemonType.equals(FIRE);
-            case GRASS -> enemyPokemonType.equals(GROUND) || enemyPokemonType.equals(ROCK)
-                    || enemyPokemonType.equals(WATER);
-            case ELECTRIC -> enemyPokemonType.equals(FLYING) || enemyPokemonType.equals(WATER);
-            case PSYCHIC -> enemyPokemonType.equals(FIGHTING) || enemyPokemonType.equals(POISON);
-            case ICE -> enemyPokemonType.equals(FLYING) || enemyPokemonType.equals(GROUND)
-                    || enemyPokemonType.equals(GRASS) || enemyPokemonType.equals(DRAGON);
-            case DRAGON -> enemyPokemonType.equals(DRAGON);
-            case FAIRY -> enemyPokemonType.equals(FIGHTING) || enemyPokemonType.equals(DRAGON)
-                    || enemyPokemonType.equals(DARK);
+            case NORMAL -> false;
+            case FIGHTING -> enemyPokemonElementComparison(enemyPokemonType, NORMAL, ROCK, STEEL, ICE, DARK);
+            case FLYING -> enemyPokemonElementComparison(enemyPokemonType, FIGHTING, BUG, GRASS);
+            case POISON -> enemyPokemonElementComparison(enemyPokemonType, GRASS, FAIRY);
+            case GROUND -> enemyPokemonElementComparison(enemyPokemonType, POISON, ROCK, STEEL, FIRE, ELECTRIC);
+            case ROCK -> enemyPokemonElementComparison(enemyPokemonType, FLYING, BUG, FIRE, ICE);
+            case BUG -> enemyPokemonElementComparison(enemyPokemonType, GRASS, PSYCHIC, DARK);
+            case GHOST, DARK -> enemyPokemonElementComparison(enemyPokemonType, GHOST, PSYCHIC);
+            case STEEL -> enemyPokemonElementComparison(enemyPokemonType, ROCK, ICE, FAIRY);
+            case FIRE -> enemyPokemonElementComparison(enemyPokemonType, BUG, STEEL, ICE, GRASS);
+            case WATER -> enemyPokemonElementComparison(enemyPokemonType, GROUND, ROCK, FIRE);
+            case GRASS -> enemyPokemonElementComparison(enemyPokemonType, GROUND, ROCK, WATER);
+            case ELECTRIC -> enemyPokemonElementComparison(enemyPokemonType, FLYING, WATER);
+            case PSYCHIC -> enemyPokemonElementComparison(enemyPokemonType, FIGHTING, POISON);
+            case ICE -> enemyPokemonElementComparison(enemyPokemonType, FLYING, GROUND, GRASS, DRAGON);
+            case DRAGON -> enemyPokemonElementComparison(enemyPokemonType, DRAGON);
+            case FAIRY -> enemyPokemonElementComparison(enemyPokemonType, FIGHTING, DRAGON, DARK);
         };
     }
 
     public boolean isWeakAgainst(ElementsType enemyPokemonType){
         return switch (this) {
-            case NORMAL -> enemyPokemonType.equals(GHOST) || enemyPokemonType.equals(ROCK)
-                    || enemyPokemonType.equals(STEEL);
-            case FIGHTING -> enemyPokemonType.equals(FLYING) || enemyPokemonType.equals(PSYCHIC)
-                    || enemyPokemonType.equals(FAIRY) || enemyPokemonType.equals(BUG) || enemyPokemonType.equals(POISON)
-                    || enemyPokemonType.equals(GHOST);
-            case FLYING -> enemyPokemonType.equals(ROCK) || enemyPokemonType.equals(ELECTRIC)
-                    || enemyPokemonType.equals(STEEL);
-            case POISON -> enemyPokemonType.equals(GROUND) || enemyPokemonType.equals(POISON)
-                    || enemyPokemonType.equals(ROCK) || enemyPokemonType.equals(GHOST)
-                    || enemyPokemonType.equals(STEEL);
-            case GROUND -> enemyPokemonType.equals(FLYING) || enemyPokemonType.equals(GRASS)
-                    || enemyPokemonType.equals(BUG);
-            case ROCK -> enemyPokemonType.equals(FIGHTING) || enemyPokemonType.equals(GROUND)
-                    || enemyPokemonType.equals(STEEL);
-            case BUG -> enemyPokemonType.equals(FIGHTING) || enemyPokemonType.equals(FLYING)
-                    || enemyPokemonType.equals(POISON) || enemyPokemonType.equals(GHOST)
-                    || enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(FAIRY) ||enemyPokemonType.equals(FIRE);
-            case GHOST -> enemyPokemonType.equals(DARK) || enemyPokemonType.equals(NORMAL);
-            case STEEL -> enemyPokemonType.equals(FIRE) || enemyPokemonType.equals(WATER)
-                    || enemyPokemonType.equals(ELECTRIC) || enemyPokemonType.equals(STEEL);
-            case FIRE -> enemyPokemonType.equals(WATER) || enemyPokemonType.equals(ROCK)
-                    || enemyPokemonType.equals(FIRE) || enemyPokemonType.equals(DRAGON);
-            case WATER -> enemyPokemonType.equals(GRASS) || enemyPokemonType.equals(DRAGON)
-                    || enemyPokemonType.equals(WATER);
-            case GRASS -> enemyPokemonType.equals(FLYING) || enemyPokemonType.equals(POISON)
-                    || enemyPokemonType.equals(BUG) || enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(FIRE)
-                    || enemyPokemonType.equals(GRASS) || enemyPokemonType.equals(DRAGON);
-            case ELECTRIC -> enemyPokemonType.equals(GROUND) || enemyPokemonType.equals(ELECTRIC)
-                    || enemyPokemonType.equals(GRASS) || enemyPokemonType.equals(DRAGON);
-            case PSYCHIC -> enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(DARK)
-                    || enemyPokemonType.equals(PSYCHIC);
-            case ICE -> enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(FIRE)
-                    || enemyPokemonType.equals(WATER) || enemyPokemonType.equals(ICE);
-            case DRAGON -> enemyPokemonType.equals(STEEL) || enemyPokemonType.equals(FAIRY);
-            case DARK -> enemyPokemonType.equals(FIGHTING) || enemyPokemonType.equals(DARK)
-                    || enemyPokemonType.equals(FAIRY);
-            case FAIRY -> enemyPokemonType.equals(POISON) || enemyPokemonType.equals(STEEL)
-                    || enemyPokemonType.equals(FIRE);
+            case NORMAL -> enemyPokemonElementComparison(enemyPokemonType, GHOST, ROCK, STEEL);
+            case FIGHTING -> enemyPokemonElementComparison(enemyPokemonType, FLYING, FAIRY, PSYCHIC, BUG, GHOST, POISON);
+            case FLYING -> enemyPokemonElementComparison(enemyPokemonType, ROCK, STEEL, ELECTRIC);
+            case POISON -> enemyPokemonElementComparison(enemyPokemonType, GROUND, POISON, ROCK, GHOST, STEEL);
+            case GROUND -> enemyPokemonElementComparison(enemyPokemonType, FLYING, GRASS, BUG);
+            case ROCK -> enemyPokemonElementComparison(enemyPokemonType, FIGHTING, GROUND, STEEL);
+            case BUG -> enemyPokemonElementComparison(enemyPokemonType, FIGHTING, FLYING, POISON, GHOST, STEEL, FAIRY, FIRE);
+            case GHOST -> enemyPokemonElementComparison(enemyPokemonType, DARK, NORMAL);
+            case STEEL -> enemyPokemonElementComparison(enemyPokemonType, FIRE, WATER, ELECTRIC, STEEL);
+            case FIRE -> enemyPokemonElementComparison(enemyPokemonType, WATER, ROCK, FIRE, DRAGON);
+            case WATER -> enemyPokemonElementComparison(enemyPokemonType, GRASS, DRAGON, WATER);
+            case GRASS -> enemyPokemonElementComparison(enemyPokemonType, FLYING, POISON, BUG, STEEL, FIRE, GRASS, DRAGON);
+            case ELECTRIC -> enemyPokemonElementComparison(enemyPokemonType, GRASS, GROUND, ELECTRIC, DRAGON);
+            case PSYCHIC -> enemyPokemonElementComparison(enemyPokemonType, STEEL, DARK, PSYCHIC);
+            case ICE -> enemyPokemonElementComparison(enemyPokemonType, STEEL, FIRE, WATER, ICE);
+            case DRAGON -> enemyPokemonElementComparison(enemyPokemonType, STEEL, FAIRY);
+            case DARK -> enemyPokemonElementComparison(enemyPokemonType, FIGHTING, DARK, FAIRY);
+            case FAIRY -> enemyPokemonElementComparison(enemyPokemonType, POISON, STEEL, FIRE);
         };
+    }
+
+    private boolean enemyPokemonElementComparison(ElementsType enemyPokemonType, ElementsType... elementsTypesToCompare) {
+        for (ElementsType elementsType : elementsTypesToCompare) {
+            if (enemyPokemonType.equals(elementsType)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

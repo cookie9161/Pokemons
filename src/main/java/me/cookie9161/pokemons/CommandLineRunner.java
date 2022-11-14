@@ -7,6 +7,5 @@ public class CommandLineRunner {
     public CommandLineRunner() {
         MainScreen mainScreen = new MainScreen();
         mainScreen.welcomePlayerPack();
-
     }
 }

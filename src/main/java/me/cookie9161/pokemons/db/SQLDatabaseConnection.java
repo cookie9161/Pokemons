@@ -2,8 +2,8 @@ package me.cookie9161.pokemons.db;
 
 import me.cookie9161.pokemons.util.Messages;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,11 +16,12 @@ import java.util.concurrent.Executors;
 
 public abstract class SQLDatabaseConnection {
     protected static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
-    protected static final Logger LOGGER = LoggerFactory.getLogger(SQLDatabaseConnection.class);
+    protected static final Logger LOGGER = LogManager.getLogger(SQLDatabaseConnection.class);
 
     public abstract void connect();
     public abstract void disconnect();
-    public abstract Connection getConnection();
+    public abstract Connection getConnection() throws SQLException;
+    public abstract boolean isInitialized();
 
     public final void executeUpdate(String query) {
         if (StringUtils.isBlank(query)) {
@@ -28,14 +29,15 @@ public abstract class SQLDatabaseConnection {
         }
 
         EXECUTOR_SERVICE.submit(() -> {
-            try {
-                PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.executeUpdate();
-                preparedStatement.close();
+                System.out.println("Executed query: " + query);
             } catch (SQLException exception) {
                 LOGGER.error(Messages.SQL_QUERY_FAIL.formatted(query), exception);
             }
         });
+
     }
 
     public final Optional<CompletableFuture<ResultSet>> executeQuery(String query) {
