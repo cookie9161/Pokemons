@@ -2,6 +2,8 @@ package me.cookie9161.pokemons.model.pokemons;
 
 
 import lombok.extern.slf4j.Slf4j;
+import me.cookie9161.pokemons.model.potion.Potion;
+import me.cookie9161.pokemons.model.potion.PotionType;
 import me.cookie9161.pokemons.repository.impl.InMemoryPokemonRepository;
 import me.cookie9161.pokemons.util.Messages;
 import me.cookie9161.pokemons.util.RNG;
@@ -15,7 +17,6 @@ import java.util.Optional;
 @Getter
 @Setter
 public class Pokemon {
-
     private static final double RNG_DEVIATION = 0.15;
     private static final double WEAK_ATTACK_MULTIPLIER = 0.5;
     private static final double STRONG_ATTACK_MULTIPLIER = 1.25;
@@ -44,7 +45,6 @@ public class Pokemon {
         this.pokemonAttacks = pokemonAttacks;
         this.level = Level.getLevel(experience);
     }
-
 
     public Optional<Pokemon> getPokemon(String name) {
         Optional<Pokemon> optionalPokemon = IN_MEMORY_POKEMON_REPOSITORY.getPokemon(name);
@@ -86,7 +86,23 @@ public class Pokemon {
     }
 
     public void heal(int hpAmount) {
-        this.setHp(Math.min(this.getHp() + hpAmount, this.getMaxHp()));
+        if (!isKnockedOut()) {
+            this.setHp(Math.min(this.getHp() + hpAmount, this.getMaxHp()));
+        } else {
+            Messages.sendMessage(Messages.POKEMON_KNOCKED_OUT, this.getName());
+        }
+    }
+
+    public void revive(Potion revivePotion){
+        if (!isKnockedOut()){
+            return;
+        }
+
+        if (revivePotion.getPotionType().equals(PotionType.REVIVE)){
+            this.setHp(revivePotion.getPotionType().getHpIncreaseAmount());
+        } else {
+            Messages.sendMessage(Messages.WRONG_POTION_TO_REVIVE);
+        }
     }
 
     public boolean isKnockedOut() {

@@ -4,7 +4,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import me.cookie9161.pokemons.util.Messages;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -33,7 +32,6 @@ public class PostgresDatabaseConnection extends SQLDatabaseConnection {
             hikariDataSource = new HikariDataSource(hikariConfig);
         } catch (Exception exception) {
             log.error(Messages.FAILED_TO_CONNECT, exception);
-
         }
     }
 

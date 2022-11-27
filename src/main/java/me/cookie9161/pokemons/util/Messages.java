@@ -38,6 +38,11 @@ public class Messages {
             Pokemon %s not found!
             """;
 
+    public static final String POKEMON_KNOCKED_OUT =
+            """
+            Pokemon %s is knocked out!
+            """;
+
     public static final String SQL_QUERY_FAIL =
             """
             Failed to execute query: %s
@@ -51,6 +56,11 @@ public class Messages {
     public static final String FAILED_TO_CREATE_POOL =
             """
             Failed to create a pool!
+            """;
+
+    public static final String WRONG_POTION_TO_REVIVE =
+            """
+            Used wrong potion to revive
             """;
 
     private Messages() {
