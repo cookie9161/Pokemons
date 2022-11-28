@@ -1,30 +1,20 @@
 package me.cookie9161.pokemons.model.player;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.cookie9161.pokemons.model.pokemons.Pokemon;
-import me.cookie9161.pokemons.repository.impl.InMemoryPlayerRepository;
+import me.cookie9161.pokemons.model.BaseEntity;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
-public class Player {
-    private static final InMemoryPlayerRepository PLAYER_REGISTRY = new InMemoryPlayerRepository();
-
-    private final String name;
-    private List<Pokemon> pokemons;
-
-    private Player(String name) {
-        this.name = name;
-    }
-
-    public static Player getOrCreatePlayer(String name) {
-        return PLAYER_REGISTRY.getPlayer(name)
-                .orElseGet(() -> {
-                    Player player = new Player(name);
-                    PLAYER_REGISTRY.addPlayer(player);
-                    return player;
-                });
-    }
+@Entity
+@Table(name = "player")
+public class Player extends BaseEntity {
+    private String name;
 }

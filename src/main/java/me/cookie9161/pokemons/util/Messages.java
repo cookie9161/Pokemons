@@ -35,8 +35,19 @@ public class Messages {
 
     public static final String POKEMON_NOT_FOUND =
             """
-            Pokemon %s not found!
+            Pokemon {} doesn't exist
             """;
+
+    public static final String POKEMON_NAME_ALREADY_DEFINED =
+            """
+            Pokemon {} already exists with id {}
+            """;
+
+     public static final String POKEMON_ID_ALREADY_EXISTS =
+            """
+            ID {} is already taken by Pokemon {}
+            """;
+
 
     public static final String POKEMON_KNOCKED_OUT =
             """
@@ -61,6 +72,16 @@ public class Messages {
     public static final String WRONG_POTION_TO_REVIVE =
             """
             Used wrong potion to revive
+            """;
+
+    public static final String CREATING_POKEMON =
+            """
+            Creating Pokemon {} with id {}
+            """;
+
+    public static final String SEARCHING_POKEMON =
+            """
+            Searching for pokemon {}
             """;
 
     private Messages() {
