@@ -21,17 +21,17 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/pokemon")
 @RequiredArgsConstructor
-public class PokemonController {
+public class PokemonController  {
     private final PokemonService pokemonService;
-
 
     @GetMapping("/pokemons/{name}")
     public EntityModel<Pokemon> getPokemonByName(@PathVariable("name") String name) throws PokemonNotFoundException {
-        log.info(Messages.SEARCHING_POKEMON, name);
+        log.info("Searching for pokemon {}", name);
+
         Pokemon pokemon = pokemonService.getPokemon(name)
                 .orElseThrow(() -> new PokemonNotFoundException(name));
 
-        log.info("Pokemon has been found {}", pokemon.getName());
+        log.info("Pokemon {} has been found", pokemon.getName());
         return EntityModel.of(pokemon,
                 linkTo(methodOn(PokemonController.class)
                         .getPokemonByName(pokemon.getName()))
@@ -44,25 +44,43 @@ public class PokemonController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Pokemon> getPokemonById(@PathVariable("id") Long id){
-        log.info(Messages.SEARCHING_POKEMON, " with id: " + id);
-        Optional<Pokemon> resultPokemon = pokemonService.getPokemon(id);
+    public EntityModel<Pokemon> getPokemonById(@PathVariable("id") Long id) throws PokemonNotFoundException{
+        log.info("Searching for pokemon with id: {}",id);
 
-        if (resultPokemon.isEmpty()) {
-            log.warn(Messages.POKEMON_NOT_FOUND, " with id: " + id);
-        } else {
-            log.info("Found pokemon");
-        }
+        Pokemon pokemon = pokemonService.getPokemon(id)
+                .orElseThrow(() -> new PokemonNotFoundException(id));
 
-        return ResponseEntity.of(resultPokemon);
+        log.info("Found pokemon by id {}", id);
+
+        return EntityModel.of(pokemon,
+                linkTo(methodOn(PokemonController.class)
+                        .getPokemonById(pokemon.getId()))
+                        .withSelfRel(),
+                linkTo(methodOn(PokemonController.class)
+                        .all())
+                        .withRel("pokemons"));
+
+//        return ResponseEntity.of(resultPokemon);
     }
 
     @GetMapping("/pokemons")
     public CollectionModel<EntityModel<Pokemon>> all() {
+        log.info("Searching for all pokemons");
         List<EntityModel<Pokemon>> pokemons = pokemonService.getAllPokemons()
                 .stream()
-                .map(pokemon -> EntityModel.of(pokemon, linkTo(methodOn(PokemonController.class).getPokemonById(pokemon.getId())).withSelfRel(),
-                        linkTo(methodOn(PokemonController.class).all()).withRel("pokemons")))
+                .map(pokemon -> {
+                    try {
+                        return EntityModel.of(pokemon,
+                                linkTo(methodOn(PokemonController.class)
+                                        .getPokemonById(pokemon.getId()))
+                                        .withSelfRel(),
+                                linkTo(methodOn(PokemonController.class)
+                                        .all())
+                                        .withRel("pokemons"));
+                    } catch (PokemonNotFoundException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                })
                 .toList();
         return CollectionModel.of(pokemons, linkTo(methodOn(PokemonController.class).all()).withSelfRel());
     }
